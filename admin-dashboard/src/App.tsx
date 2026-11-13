@@ -2,6 +2,7 @@
 // src/App.tsx — POS admin dashboard bootstrap
 // =============================================================================
 import React from 'react';
+import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter,
   Routes,
@@ -13,7 +14,7 @@ import {
   useParams
 } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import {
   Activity,
   LayoutDashboard,
@@ -48,9 +49,7 @@ function Login() {
       await login(form.tenantId, form.username, form.password);
       navigate('/');
     } catch (error: any) {
-      const message = error?.response?.data?.error || 'Login failed';
-      // React-hot-toast is mounted at the App level.
-      import('react-hot-toast').then(({ default: toast }) => toast.error(message));
+      toast.error(error?.response?.data?.error || 'Login failed');
     } finally {
       setLoading(false);
     }
